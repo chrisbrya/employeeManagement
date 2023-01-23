@@ -17,7 +17,7 @@ import java.util.List;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
     private Long id;
 
@@ -30,10 +30,8 @@ public class Customer {
     @Column(name="password")
     private String password;
 
-    @Column(name="dob")
-    private Date dob;
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_customer_id", referencedColumnName = "customer_id")
+    @JoinColumn(name = "fk_customer_id", referencedColumnName = "customer_id", nullable = true)
     private List<Dependent> dependent;
 
 }

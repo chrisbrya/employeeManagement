@@ -13,7 +13,7 @@ import java.util.Date;
 public class Dependent {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dependent_id")
     private Long id;
 
