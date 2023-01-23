@@ -1,13 +1,11 @@
 package com.example.demo.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 @Entity
@@ -31,7 +29,7 @@ public class Customer {
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_customer_id", referencedColumnName = "customer_id", nullable = true)
+    @JoinColumn(name = "fk_customer_id", referencedColumnName = "customer_id")
     private List<Dependent> dependent;
 
 }
