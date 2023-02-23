@@ -2,8 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Dependent;
+import com.example.demo.exception.UserNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CustomerInterface {
 
@@ -30,4 +32,11 @@ public interface CustomerInterface {
     public Customer findCustomerByEmail(String email);
 
     public Customer findCustomerByEmailAndPassword(String email, String password);
+
+    public List<Dependent> findDependentByCustomerEmail(String email);
+
+    Customer loadCustomerByEmail(String email) throws UserNotFoundException;
+
+    public String addDependentToCustomer(Dependent dependent);
+
 }

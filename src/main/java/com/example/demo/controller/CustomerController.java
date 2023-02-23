@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.dao.CustomerRepository;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Dependent;
 import com.example.demo.service.CustomerInterfaceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +17,10 @@ public class CustomerController {
 
     @Autowired
     CustomerInterfaceImpl customerInterfaceImpl;
+    @Autowired
+    private CustomerRepository customerRepository;
 
-    @GetMapping("getAllCustomers")
+    @GetMapping("/getAllCustomers")
     public List<Customer> getAllCustomers() { return this.customerInterfaceImpl.getAllCustomers(); }
 
     @PostMapping("/saveCustomer")
@@ -32,13 +36,19 @@ public class CustomerController {
         customer1 = this.customerInterfaceImpl.saveCustomer(customer);
         return customer.toString() + " was processed";
     }
+
+    @GetMapping("/getCustomer/{id}")
+    public Customer findCustomerById(@PathVariable("id") Long id) {return this.customerInterfaceImpl.findCustomerById(id);}
+
     @PostMapping("/login")
     public Customer loginCustomer(@RequestBody Customer customer) throws Exception {
+
         String tempEmail = customer.getEmail();
         String tempPass = customer.getPassword();
         Customer customer1 = null;
         if(tempEmail != null && tempPass != null) {
            customer1 = customerInterfaceImpl.findCustomerByEmailAndPassword(tempEmail, tempPass);
+
         }
         if(customer1 == null) {
             throw new Exception("User does not exist");
@@ -58,7 +68,7 @@ public class CustomerController {
         return "Customer was deleted";
     }
 
-    @GetMapping("getAllDependents")
+    @GetMapping("/getAllDependents")
     public List<Dependent> getAllDependents() { return this.customerInterfaceImpl.getAllDependents(); }
 
     @PostMapping("/saveDependent")
@@ -78,4 +88,16 @@ public class CustomerController {
         this.customerInterfaceImpl.updateDependent(dependent);
         return dependent.toString() + " was updated";
     }
+
+    @GetMapping("/getDependent/{email}")
+    public List<Dependent> findDependentsByCustomerEmail(@PathVariable String email) {
+        return this.customerInterfaceImpl.findDependentByCustomerEmail(email);
+    }
+
+    @GetMapping("/findCustomerByEmail/{email}")
+    public Customer findCustomerByEmail(@PathVariable("email") String email) {
+        return this.customerInterfaceImpl.findCustomerByEmail(email);
+    }
+
+
 }

@@ -2,16 +2,14 @@ package com.example.demo.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 
 import java.util.List;
 
 @Entity
-@Table(name="customer")
-@Getter
-@Setter
+@Table(name="Customer")
+@Data
 public class Customer {
 
     @Id
@@ -23,13 +21,17 @@ public class Customer {
     private String first_name;
     @Column(name="last_name")
     private String last_name;
-    @Column(name="email")
+
+    @Column(name = "customer_code")
+    private String customer_code;
+    @Column(name="email", nullable = false)
     private String email;
     @Column(name="password")
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "fk_customer_id", referencedColumnName = "customer_id")
     private List<Dependent> dependent;
+
 
 }

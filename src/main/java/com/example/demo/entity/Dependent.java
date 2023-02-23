@@ -1,15 +1,13 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
 @Entity
-@Table(name="dependent")
-@Getter
-@Setter
+@Table(name="Dependent")
+@Data
 public class Dependent {
 
     @Id
